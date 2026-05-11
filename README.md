@@ -19,7 +19,7 @@ Pré-requisitos: Docker e Docker Compose instalados.
 
 1. Clone o repositório:
 ```bash
-git clone git clone https://github.com/cybersenpaiworks/grade-ufabc-dinamica.git
+git clone https://github.com/cybersenpaiworks/grade-ufabc-dinamica.git
 ```
 
 2. Suba a infraestrutura completa:
