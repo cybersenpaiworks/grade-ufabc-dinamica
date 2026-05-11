@@ -5,7 +5,6 @@ frontend/.svelte-kit/
 frontend/npm-debug.log*
 frontend/.env
 frontend/.env.*
-frontend/package-lock.json
 
 # --- Python / FastAPI (Backend) ---
 backend/venv/
