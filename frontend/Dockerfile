@@ -1,51 +1,28 @@
-version: '3.8'
+# frontend/Dockerfile
+FROM node:20-alpine AS builder
 
-services:
-  redis:
-    image: redis:alpine
-    container_name: pdf_redis
-    restart: unless-stopped
-    command: redis-server --save 60 1 --loglevel warning
-    volumes:
-      # Persistência de dados seguindo o seu padrão de organização
-      - /home/cybersenpai/docker-data/extrator-pdf/redis:/data
-    networks:
-      - proxy-network
+WORKDIR /app
 
-  backend:
-    build: 
-      context: ./backend
-      dockerfile: Dockerfile
-    container_name: pdf_backend
-    restart: unless-stopped
-    expose:
-      - "8000" # Acessível apenas dentro da proxy-network
-    depends_on:
-      - redis
-    networks:
-      - proxy-network
+# Copia os arquivos de dependência e instala
+COPY package*.json ./
+RUN npm ci
 
-  frontend:
-    build: 
-      context: ./frontend
-      dockerfile: Dockerfile
-    container_name: pdf_frontend
-    restart: unless-stopped
-    expose:
-      - "3000" # O NPM ou Cloudflare Tunnel vai apontar para cá
-    depends_on:
-      - backend
-    labels:
-      # Labels integradas ao seu Dashboard/Hub
-      hub.enable: "true"
-      hub.name: "Grade UFABC"
-      hub.host: "grade.cybersenpaiworks.com.br"
-      hub.scheme: "https"
-      hub.icon: "📅"
-      hub.description: "Portal dinâmico para extração e montagem de grade de disciplinas."
-    networks:
-      - proxy-network
+# Copia o resto do código e compila a aplicação para produção
+COPY . .
+RUN npm run build
 
-networks:
-  proxy-network:
-    external: true
+# --- Estágio Final ---
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Copia apenas os arquivos necessários da etapa de build
+COPY --from=builder /app/build ./build
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package.json ./
+
+# A porta padrão do adapter-node é a 3000
+EXPOSE 3000
+
+# Inicia o servidor Node otimizado
+CMD ["node", "build/index.js"]
