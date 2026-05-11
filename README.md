@@ -1,42 +1,22 @@
-# sv
+# 📅 Extrator Dinâmico de Grade (UFABC)
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+Um portal web dinâmico projetado para processar, higienizar e visualizar grades de horários complexas a partir de arquivos PDF desestruturados. 
 
-## Creating a project
+Este projeto resolve o problema crônico de visualização de horários acadêmicos cruzando informações de turmas, frequência quinzenal e vagas livres em uma interface de altíssima performance.
 
-If you're seeing this, you've probably already done this step. Congrats!
+## 🚀 Tecnologias Utilizadas
 
-```sh
-# create a new project
-npx sv create my-app
-```
+A arquitetura foi desenhada seguindo o padrão de **Monorepo**, dividindo responsabilidades entre extração pesada de dados e renderização reativa no cliente.
 
-To recreate this project with the same configuration:
+* **Frontend:** SvelteKit (TypeScript) adaptado para Node.js. (Alta performance na renderização de milhares de linhas sem Virtual DOM).
+* **Backend:** FastAPI (Python) responsável pela sanitização via `pandas` e leitura visual de tabelas via `pdfplumber`.
+* **Banco de Dados/Sessão:** Redis para armazenamento em memória ultra-rápido.
+* **Infraestrutura:** Docker e Docker Compose com rede de proxy isolada.
 
-```sh
-# recreate this project
-npx sv@0.15.3 create --template minimal --types ts --install npm ./
-```
+## ⚙️ Como executar o projeto localmente
 
-## Developing
+Pré-requisitos: Docker e Docker Compose instalados.
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```sh
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```sh
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+1. Clone o repositório:
+   ```bash
+   git clone [https://github.com/SEU_USUARIO/extrator-pdf-dinamico.git](https://github.com/SEU_USUARIO/extrator-pdf-dinamico.git)

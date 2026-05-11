@@ -1,0 +1,21 @@
+# --- Node / SvelteKit (Frontend) ---
+frontend/node_modules/
+frontend/build/
+frontend/.svelte-kit/
+frontend/npm-debug.log*
+frontend/.env
+frontend/.env.*
+frontend/package-lock.json
+
+# --- Python / FastAPI (Backend) ---
+backend/venv/
+backend/__pycache__/
+backend/*.py[cod]
+backend/*$py.class
+backend/.pytest_cache/
+backend/.env
+
+# --- Infra / OS ---
+.DS_Store
+*.log
+docker-data/
